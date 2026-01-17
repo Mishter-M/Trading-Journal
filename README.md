@@ -42,7 +42,7 @@ Simply double-click `trading_dashboard.html` to open it in your default browser.
 ### 2. Add Your Trading Data
 
 1. **Export your trades** from your broker in CSV format
-2. **Replace or update** the file `Orders_Data/Orders_data.CSV`
+2. **Replace or update** the file `Orders_Data/Orders_data.csv`
 3. **Refresh** the browser page to see updated analytics
 
 ## CSV File Format
@@ -71,12 +71,12 @@ Your CSV file must include these columns:
 **Method 1: Append to Existing File**
 ```bash
 # Add new trades to the existing CSV file
-cat new_trades.csv >> Orders_Data/Orders_data.CSV
+cat new_trades.csv >> Orders_Data/Orders_data.csv
 ```
 
 **Method 2: Replace the File**
 1. Export new data from your broker
-2. Save it as `Orders_data.CSV`
+2. Save it as `Orders_data.csv`
 3. Place it in the `Orders_Data/` folder
 4. Refresh your browser
 
@@ -85,7 +85,7 @@ cat new_trades.csv >> Orders_Data/Orders_data.CSV
 To use a different CSV file:
 
 1. Open `trading_dashboard.html`
-2. Find line ~196: `const CSV_FILE_PATH = 'Orders_Data/Orders_data.CSV';`
+2. Find line ~196: `const CSV_FILE_PATH = 'Orders_Data/Orders_data.csv';`
 3. Change to your file path: `const CSV_FILE_PATH = 'Orders_Data/your_file.csv';`
 4. Save and refresh the browser
 
@@ -117,7 +117,7 @@ To use a different CSV file:
 Trading-Journal/
 ├── trading_dashboard.html    # Main dashboard application
 ├── Orders_Data/
-│   └── Orders_data.CSV       # Your trading data
+│   └── Orders_data.csv       # Your trading data
 └── README.md                 # This file
 ```
 
@@ -175,7 +175,7 @@ Edit Chart.js configuration around line ~580:
 ## Troubleshooting
 
 ### Dashboard shows no data
-- ✅ Check that `Orders_data.CSV` exists in `Orders_Data/` folder
+- ✅ Check that `Orders_data.csv` exists in `Orders_Data/` folder
 - ✅ Verify CSV file path in HTML matches actual file location
 - ✅ Open browser console (F12) to check for errors
 
