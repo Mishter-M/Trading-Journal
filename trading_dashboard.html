@@ -320,8 +320,29 @@
     </div>
 
     <script>
-        // CSV data embedded
-        const csvData = `Account Number,Type,TradeInd,Transaction,Quantity,Cusip,ADP,Symbol,CallPut,UnderlyingSymbol,ExpireDate,StrikePrice,TD,SD,Activity Date,Price,Amount,CurrencyCode,Commission,Description,Activity Time,Order ID
+        // Configuration - Update this path to your CSV file
+        const CSV_FILE_PATH = 'Orders_Data/Orders_data.CSV';
+
+        // CSV data will be loaded from file
+        let csvData = '';
+
+        // Function to load CSV file
+        async function loadCSV() {
+            try {
+                const response = await fetch(CSV_FILE_PATH);
+                if (!response.ok) {
+                    throw new Error('CSV file not found');
+                }
+                csvData = await response.text();
+                initialize();
+            } catch (error) {
+                console.error('Error loading CSV:', error);
+                alert('Error loading CSV file. Please make sure the file path is correct: ' + CSV_FILE_PATH);
+            }
+        }
+
+        // Fallback embedded CSV data (kept for offline use)
+        const fallbackCSVData = `Account Number,Type,TradeInd,Transaction,Quantity,Cusip,ADP,Symbol,CallPut,UnderlyingSymbol,ExpireDate,StrikePrice,TD,SD,Activity Date,Price,Amount,CurrencyCode,Commission,Description,Activity Time,Order ID
 11896756,Margin,T,Sell,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.84,167.97,USD,0.03,PUT SPY 693.0000 20260116,1/16/2026 09:46:19:593,1225348729LEG1      
 11896756,Margin,T,Buy,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.8,160.02,USD,0.02,PUT SPY 693.0000 20260116,1/16/2026 09:45:48:553,1225346910LEG1      
 11896756,Margin,T,Sell,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.45,179.94,USD,0.06,PUT SPY 690.0000 20260116,1/16/2026 10:12:30:797,1225396433LEG1      
@@ -649,13 +670,20 @@
                 `<option value="${currentMonth}">${months[currentMonth]} ${currentYear}</option>`;
         }
 
-        // Initialize
-        parseCSV();
-        calculateDailyPL();
-        updateStats();
-        createChart();
-        updateMonthSelector();
-        updateCalendar();
+        // Initialize function
+        function initialize() {
+            parseCSV();
+            calculateDailyPL();
+            updateStats();
+            createChart();
+            updateMonthSelector();
+            updateCalendar();
+        }
+
+        // Load CSV when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCSV();
+        });
     </script>
 </body>
 </html>
