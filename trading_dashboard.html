@@ -6,6 +6,8 @@
     <title>Options Trading Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -13,188 +15,302 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a1b1f;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
             min-height: 100vh;
             padding: 20px;
+            color: #e2e8f0;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            padding: 30px;
+            padding: 40px;
             text-align: center;
         }
 
         .header h1 {
             font-size: 2.5em;
+            font-weight: 700;
             margin-bottom: 10px;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #94a3b8;
+            font-size: 1.1em;
+            font-weight: 400;
+        }
+
+        .upload-section {
+            margin-top: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px 32px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .upload-btn {
+            cursor: pointer;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.05em;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        }
+
+        .upload-btn:active {
+            transform: translateY(-1px);
         }
 
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            padding: 30px;
-            background: #f8f9fa;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            padding: 40px;
+            background: transparent;
         }
 
         .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 28px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.2);
         }
 
         .stat-card h3 {
-            color: #666;
-            font-size: 0.9em;
-            margin-bottom: 10px;
+            color: #94a3b8;
+            font-size: 0.85em;
+            margin-bottom: 12px;
             text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
         }
 
         .stat-card .value {
-            font-size: 2em;
-            font-weight: bold;
+            font-size: 2.5em;
+            font-weight: 700;
+            letter-spacing: -1px;
         }
 
         .stat-card .positive {
-            color: #10b981;
+            color: #34d399;
         }
 
         .stat-card .negative {
-            color: #ef4444;
+            color: #f87171;
         }
 
         .chart-container {
-            padding: 30px;
+            padding: 40px;
+            background: transparent;
+        }
+
+        .chart-container h2 {
+            color: #e2e8f0;
+            font-weight: 600;
+            margin-bottom: 24px;
+            font-size: 1.5em;
         }
 
         .chart-wrapper {
             position: relative;
-            height: 400px;
+            height: 450px;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
             margin-bottom: 40px;
         }
 
         .calendar-container {
-            padding: 30px;
-            background: #f8f9fa;
+            padding: 40px;
+            background: transparent;
         }
 
         .calendar-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         .calendar-header h2 {
-            color: #333;
+            color: #e2e8f0;
+            font-weight: 600;
+            font-size: 1.5em;
         }
 
         .month-selector {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
         }
 
         .month-selector button {
-            padding: 8px 16px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            padding: 10px 18px;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
             cursor: pointer;
             font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .month-selector button:hover {
-            background: #5568d3;
+            background: rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: scale(1.05);
         }
 
         .month-selector select {
-            padding: 8px 12px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(30, 41, 59, 0.5);
+            color: #e2e8f0;
             font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
         }
 
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            gap: 12px;
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .calendar-day-header {
             text-align: center;
-            font-weight: bold;
-            padding: 10px;
-            color: #667eea;
+            font-weight: 600;
+            padding: 12px;
+            color: #60a5fa;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .calendar-day {
             aspect-ratio: 1;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: white;
-            transition: all 0.3s;
+            background: rgba(15, 23, 42, 0.5);
+            transition: all 0.3s ease;
         }
 
         .calendar-day:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
+            border-color: rgba(139, 92, 246, 0.5);
         }
 
         .calendar-day.empty {
-            background: #f9fafb;
-            border: 1px dashed #e5e7eb;
+            background: rgba(15, 23, 42, 0.2);
+            border: 1px dashed rgba(255, 255, 255, 0.05);
         }
 
         .calendar-day.has-trades {
             cursor: pointer;
+            background: rgba(30, 41, 59, 0.6);
         }
 
         .calendar-day .date {
-            font-weight: bold;
-            color: #333;
+            font-weight: 600;
+            color: #e2e8f0;
+            font-size: 1.1em;
         }
 
         .calendar-day .pl-amount {
-            font-size: 0.85em;
-            font-weight: bold;
-            margin-top: 5px;
+            font-size: 0.9em;
+            font-weight: 700;
+            margin-top: 8px;
         }
 
         .calendar-day .pl-amount.positive {
-            color: #10b981;
+            color: #34d399;
         }
 
         .calendar-day .pl-amount.negative {
-            color: #ef4444;
+            color: #f87171;
         }
 
         .calendar-day .trade-count {
             font-size: 0.75em;
-            color: #666;
-            margin-top: 2px;
+            color: #94a3b8;
+            margin-top: 4px;
+            font-weight: 500;
         }
 
         .modal {
@@ -205,29 +321,40 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
         }
 
         .modal-content {
-            background-color: white;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+            backdrop-filter: blur(20px);
             margin: 50px auto;
-            padding: 30px;
-            border-radius: 10px;
-            max-width: 800px;
-            max-height: 80vh;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 900px;
+            max-height: 85vh;
             overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content h2 {
+            color: #e2e8f0;
+            margin-bottom: 24px;
         }
 
         .close {
-            color: #aaa;
+            color: #94a3b8;
             float: right;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 32px;
+            font-weight: 300;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .close:hover {
-            color: #000;
+            color: #60a5fa;
+            transform: rotate(90deg);
         }
 
         .trade-details {
@@ -235,30 +362,174 @@
         }
 
         .trade-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 12px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+
+        .trade-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateX(4px);
         }
 
         .trade-item.buy {
-            border-left-color: #ef4444;
+            border-left-color: #f87171;
         }
 
         .trade-item.sell {
-            border-left-color: #10b981;
+            border-left-color: #34d399;
+        }
+
+        .trade-item strong {
+            color: #e2e8f0;
+        }
+
+        .trade-item small {
+            color: #94a3b8;
+        }
+
+        .info-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1.5px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+        }
+
+        .info-icon:hover {
+            background: rgba(59, 130, 246, 0.25);
+            border-color: rgba(59, 130, 246, 0.6);
+            transform: scale(1.15) rotate(15deg);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .info-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+        }
+
+        .info-modal-content {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            margin: 100px auto;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 650px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .info-modal-content h3 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .info-modal-content p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .info-modal-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-modal-content li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+
+        .info-modal-content li:last-child {
+            border-bottom: none;
+        }
+
+        .required {
+            color: #f87171;
+            font-weight: 600;
+        }
+
+        .optional {
+            color: #34d399;
+            font-weight: 600;
+        }
+
+        #fileName {
+            color: #94a3b8;
+            font-size: 0.95em;
+            font-weight: 500;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        #fileName:empty {
+            display: none;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(139, 92, 246, 0.5);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(139, 92, 246, 0.7);
         }
 
         @media (max-width: 768px) {
             .calendar {
-                gap: 5px;
-                padding: 10px;
+                gap: 8px;
+                padding: 20px;
             }
 
             .calendar-day {
-                padding: 5px;
+                padding: 8px;
                 font-size: 0.85em;
+            }
+
+            .info-modal-content {
+                margin: 50px 20px;
+                padding: 30px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .stat-card .value {
+                font-size: 2em;
             }
         }
     </style>
@@ -266,8 +537,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Options Trading Dashboard</h1>
-            <p>Track your trading performance</p>
+            <h1>Trading Journal</h1>
+            <p>Track your trading performance with real-time analytics</p>
+            <div class="upload-section">
+                <label for="csvFileInput" class="upload-btn">
+                    <span>📁</span> Upload CSV File
+                </label>
+                <span class="info-icon" onclick="showInfoModal()" title="CSV Format Requirements">ⓘ</span>
+                <input type="file" id="csvFileInput" accept=".csv" style="display: none;">
+                <span id="fileName"></span>
+            </div>
         </div>
 
         <div class="stats-container">
@@ -319,30 +598,64 @@
         </div>
     </div>
 
-    <script>
-        // Configuration - Update this path to your CSV file
-        const CSV_FILE_PATH = 'Orders_data.csv';
+    <div id="infoModal" class="info-modal">
+        <div class="info-modal-content">
+            <span class="close" onclick="closeInfoModal()">&times;</span>
+            <h3>📋 Required CSV Columns</h3>
+            <p>Your CSV file must contain the following columns for the dashboard to work correctly:</p>
+            <ul>
+                <li><span class="required">✓ Activity Date</span> - Date of the trade (e.g., 1/16/2026)</li>
+                <li><span class="required">✓ Transaction</span> - Must be either "Buy" or "Sell"</li>
+                <li><span class="required">✓ Amount</span> - Trade amount in dollars (numeric)</li>
+                <li><span class="required">✓ Commission</span> - Commission fee in dollars (numeric)</li>
+            </ul>
+            <h3 style="margin-top: 20px;">📝 Optional Columns</h3>
+            <p>These columns will be displayed in trade details if present:</p>
+            <ul>
+                <li><span class="optional">○ Quantity</span> - Number of contracts</li>
+                <li><span class="optional">○ Description</span> - Trade description (e.g., "PUT SPY 693.0000")</li>
+                <li><span class="optional">○ Activity Time</span> - Time of the trade</li>
+                <li><span class="optional">○ Price</span> - Price per contract</li>
+            </ul>
+            <p style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-radius: 5px; font-size: 0.9em;">
+                <strong>Note:</strong> The CSV file should have a header row with column names. Additional columns will be ignored.
+            </p>
+        </div>
+    </div>
 
-        // CSV data will be loaded from file
+    <script>
+        // CSV data will be loaded from uploaded file
         let csvData = '';
 
-        // Function to load CSV file
-        async function loadCSV() {
-            try {
-                const response = await fetch(CSV_FILE_PATH);
-                if (!response.ok) {
-                    throw new Error('CSV file not found');
-                }
-                csvData = await response.text();
-                initialize();
-            } catch (error) {
-                console.error('Error loading CSV:', error);
-                alert('Error loading CSV file. Please make sure the file path is correct: ' + CSV_FILE_PATH);
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (!file.name.endsWith('.csv')) {
+                alert('Please upload a CSV file');
+                return;
             }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                csvData = e.target.result;
+                initialize();
+                document.getElementById('fileName').textContent = '✓ Loaded: ' + file.name;
+            };
+            reader.onerror = function() {
+                alert('Error reading file. Please try again.');
+            };
+            reader.readAsText(file);
         }
 
-        // Fallback embedded CSV data (kept for offline use)
-        const fallbackCSVData = `Account Number,Type,TradeInd,Transaction,Quantity,Cusip,ADP,Symbol,CallPut,UnderlyingSymbol,ExpireDate,StrikePrice,TD,SD,Activity Date,Price,Amount,CurrencyCode,Commission,Description,Activity Time,Order ID
+        // Show initial prompt
+        function showUploadPrompt() {
+            document.getElementById('fileName').innerHTML = '<span style="color: #fbbf24;">⚠️ Please upload a CSV file to get started</span>';
+        }
+
+        // Sample embedded CSV data (for reference - not used)
+        const sampleCSVData = `Account Number,Type,TradeInd,Transaction,Quantity,Cusip,ADP,Symbol,CallPut,UnderlyingSymbol,ExpireDate,StrikePrice,TD,SD,Activity Date,Price,Amount,CurrencyCode,Commission,Description,Activity Time,Order ID
 11896756,Margin,T,Sell,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.84,167.97,USD,0.03,PUT SPY 693.0000 20260116,1/16/2026 09:46:19:593,1225348729LEG1      
 11896756,Margin,T,Buy,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.8,160.02,USD,0.02,PUT SPY 693.0000 20260116,1/16/2026 09:45:48:553,1225346910LEG1      
 11896756,Margin,T,Sell,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.45,179.94,USD,0.06,PUT SPY 690.0000 20260116,1/16/2026 10:12:30:797,1225396433LEG1      
@@ -635,10 +948,22 @@
             document.getElementById('tradeModal').style.display = 'none';
         }
 
+        function showInfoModal() {
+            document.getElementById('infoModal').style.display = 'block';
+        }
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
         window.onclick = function(event) {
             const modal = document.getElementById('tradeModal');
+            const infoModal = document.getElementById('infoModal');
             if (event.target == modal) {
                 modal.style.display = 'none';
+            }
+            if (event.target == infoModal) {
+                infoModal.style.display = 'none';
             }
         }
 
@@ -682,7 +1007,11 @@
 
         // Load CSV when page loads
         window.addEventListener('DOMContentLoaded', () => {
-            loadCSV();
+            // Set up file upload listener
+            document.getElementById('csvFileInput').addEventListener('change', handleFileUpload);
+            
+            // Show upload prompt
+            showUploadPrompt();
         });
     </script>
 </body>
