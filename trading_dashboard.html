@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Options Trading Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-card .positive {
+            color: #10b981;
+        }
+
+        .stat-card .negative {
+            color: #ef4444;
+        }
+
+        .chart-container {
+            padding: 30px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin-bottom: 40px;
+        }
+
+        .calendar-container {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-header h2 {
+            color: #333;
+        }
+
+        .month-selector {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .month-selector button {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .month-selector button:hover {
+            background: #5568d3;
+        }
+
+        .month-selector select {
+            padding: 8px 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            color: #667eea;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .calendar-day:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .calendar-day.empty {
+            background: #f9fafb;
+            border: 1px dashed #e5e7eb;
+        }
+
+        .calendar-day.has-trades {
+            cursor: pointer;
+        }
+
+        .calendar-day .date {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .calendar-day .pl-amount {
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .calendar-day .pl-amount.positive {
+            color: #10b981;
+        }
+
+        .calendar-day .pl-amount.negative {
+            color: #ef4444;
+        }
+
+        .calendar-day .trade-count {
+            font-size: 0.75em;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .trade-details {
+            margin-top: 20px;
+        }
+
+        .trade-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .trade-item.buy {
+            border-left-color: #ef4444;
+        }
+
+        .trade-item.sell {
+            border-left-color: #10b981;
+        }
+
+        @media (max-width: 768px) {
+            .calendar {
+                gap: 5px;
+                padding: 10px;
+            }
+
+            .calendar-day {
+                padding: 5px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Options Trading Dashboard</h1>
+            <p>Track your trading performance</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Total P/L</h3>
+                <div class="value" id="totalPL">$0.00</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Trades</h3>
+                <div class="value" id="totalTrades">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Win Rate</h3>
+                <div class="value" id="winRate">0%</div>
+            </div>
+            <div class="stat-card">
+                <h3>Avg P/L per Day</h3>
+                <div class="value" id="avgPL">$0.00</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2 style="margin-bottom: 20px; color: #333;">Cumulative P/L Chart</h2>
+            <div class="chart-wrapper">
+                <canvas id="plChart"></canvas>
+            </div>
+        </div>
+
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <h2>Monthly Trading Calendar</h2>
+                <div class="month-selector">
+                    <button onclick="previousMonth()">◀</button>
+                    <select id="monthSelect" onchange="updateCalendar()">
+                        <option value="0">January 2026</option>
+                    </select>
+                    <button onclick="nextMonth()">▶</button>
+                </div>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+    </div>
+
+    <div id="tradeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Trade Details</h2>
+            <div id="modalBody" class="trade-details"></div>
+        </div>
+    </div>
+
+    <script>
+        // CSV data embedded
+        const csvData = `Account Number,Type,TradeInd,Transaction,Quantity,Cusip,ADP,Symbol,CallPut,UnderlyingSymbol,ExpireDate,StrikePrice,TD,SD,Activity Date,Price,Amount,CurrencyCode,Commission,Description,Activity Time,Order ID
+11896756,Margin,T,Sell,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.84,167.97,USD,0.03,PUT SPY 693.0000 20260116,1/16/2026 09:46:19:593,1225348729LEG1      
+11896756,Margin,T,Buy,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.8,160.02,USD,0.02,PUT SPY 693.0000 20260116,1/16/2026 09:45:48:553,1225346910LEG1      
+11896756,Margin,T,Sell,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.45,179.94,USD,0.06,PUT SPY 690.0000 20260116,1/16/2026 10:12:30:797,1225396433LEG1      
+11896756,Margin,T,Sell,100,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.65,64.98,USD,0.02,PUT SPY 690.0000 20260116,1/16/2026 10:19:45:030,1225398521LEG1      
+11896756,Margin,T,Sell,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.43,171.94,USD,0.06,PUT SPY 690.0000 20260116,1/16/2026 10:06:40:097,1225385677LEG1      
+11896756,Margin,T,Buy,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.53,212.05,USD,0.05,PUT SPY 690.0000 20260116,1/16/2026 10:05:19:963,1225380239LEG1      
+11896756,Margin,T,Buy,100,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.45,45.02,USD,0.02,PUT SPY 690.0000 20260116,1/16/2026 10:13:38:323,1225397885LEG1      
+11896756,Margin,T,Buy,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.39,156.05,USD,0.05,PUT SPY 690.0000 20260116,1/16/2026 10:12:10:697,1225394874LEG1      
+11896756,Margin,T,Sell,200,="SPY260115P691202601",,SPY260115P691,PUT,SPY   ,1/15/2026,691.0000,1/15/2026,1/16/2026,1/15/2026,0.16,31.97,USD,0.03,PUT SPY 691.0000 20260115,1/15/2026 15:10:02:877,1225204415LEG1      
+11896756,Margin,T,Buy,200,="SPY260115P691202601",,SPY260115P691,PUT,SPY   ,1/15/2026,691.0000,1/15/2026,1/16/2026,1/15/2026,0.12,24.02,USD,0.02,PUT SPY 691.0000 20260115,1/15/2026 15:04:14:620,1225202991LEG1      
+11896756,Margin,T,Sell,400,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.22,87.94,USD,0.06,CALL SPY 696.0000 20260115,1/15/2026 11:35:04:403,1225037052LEG1      
+11896756,Margin,T,Sell,500,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.36,179.92,USD,0.08,CALL SPY 696.0000 20260115,1/15/2026 11:51:22:637,1225052775LEG1      
+11896756,Margin,T,Buy,500,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.29,145.06,USD,0.06,CALL SPY 696.0000 20260115,1/15/2026 11:45:47:233,1225047905LEG1      
+11896756,Margin,T,Buy,400,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.29,116.05,USD,0.05,CALL SPY 696.0000 20260115,1/15/2026 11:30:04:527,1225035846LEG1      
+11896756,Margin,T,Sell,400,="SPY260115C695202601",,SPY260115C695,CALL,SPY   ,1/15/2026,695.0000,1/15/2026,1/16/2026,1/15/2026,0.72,287.94,USD,0.06,CALL SPY 695.0000 20260115,1/15/2026 10:34:59:620,1224961785LEG1      
+11896756,Margin,T,Buy,400,="SPY260115C695202601",,SPY260115C695,CALL,SPY   ,1/15/2026,695.0000,1/15/2026,1/16/2026,1/15/2026,0.61,244.05,USD,0.05,CALL SPY 695.0000 20260115,1/15/2026 10:25:13:910,1224955860LEG1      
+11896756,Margin,T,Sell,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,0.51,101.97,USD,0.03,PUT SPY 687.0000 20260114,1/14/2026 11:39:33:107,1224551453LEG1      
+11896756,Margin,T,Sell,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,1.19,237.97,USD,0.03,PUT SPY 687.0000 20260114,1/14/2026 10:47:24:443,1224486460LEG1      
+11896756,Margin,T,Buy,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,0.99,198.02,USD,0.02,PUT SPY 687.0000 20260114,1/14/2026 10:45:07:153,1224484556LEG1      
+11896756,Margin,T,Buy,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,0.46,92.02,USD,0.02,PUT SPY 687.0000 20260114,1/14/2026 11:25:31:907,1224534134LEG1      
+11896756,Margin,T,Sell,300,="SPY260114P685202601",,SPY260114P685,PUT,SPY   ,1/14/2026,685.0000,1/14/2026,1/15/2026,1/14/2026,0.1,29.95,USD,0.05,PUT SPY 685.0000 20260114,1/14/2026 13:55:28:773,1224674457LEG1      
+11896756,Margin,T,Buy,300,="SPY260114P685202601",,SPY260114P685,PUT,SPY   ,1/14/2026,685.0000,1/14/2026,1/15/2026,1/14/2026,0.16,48.04,USD,0.04,PUT SPY 685.0000 20260114,1/14/2026 13:48:23:677,1224663757LEG1      
+11896756,Margin,T,Sell,200,="SPY260114C691202601",,SPY260114C691,CALL,SPY   ,1/14/2026,691.0000,1/14/2026,1/15/2026,1/14/2026,0.8,159.97,USD,0.03,CALL SPY 691.0000 20260114,1/14/2026 10:20:13:347,1224447951LEG1      
+11896756,Margin,T,Buy,200,="SPY260114C691202601",,SPY260114C691,CALL,SPY   ,1/14/2026,691.0000,1/14/2026,1/15/2026,1/14/2026,1.05,210.02,USD,0.02,CALL SPY 691.0000 20260114,1/14/2026 10:18:23:313,1224436954LEG1      
+11896756,Margin,T,Sell,100,="SPY260113P692202601",,SPY260113P692,PUT,SPY   ,1/13/2026,692.0000,1/13/2026,1/14/2026,1/13/2026,0.21,20.98,USD,0.02,PUT SPY 692.0000 20260113,1/13/2026 11:35:08:663,1224085050LEG1      
+11896756,Margin,T,Buy,100,="SPY260113P692202601",,SPY260113P692,PUT,SPY   ,1/13/2026,692.0000,1/13/2026,1/14/2026,1/13/2026,0.32,32.02,USD,0.02,PUT SPY 692.0000 20260113,1/13/2026 11:31:59:527,1224080873LEG1      
+11896756,Margin,T,Sell,200,="SPY260113C696202601",,SPY260113C696,CALL,SPY   ,1/13/2026,696.0000,1/13/2026,1/14/2026,1/13/2026,0.22,43.97,USD,0.03,CALL SPY 696.0000 20260113,1/13/2026 12:09:30:337,1224114366LEG1      
+11896756,Margin,T,Buy,200,="SPY260113C696202601",,SPY260113C696,CALL,SPY   ,1/13/2026,696.0000,1/13/2026,1/14/2026,1/13/2026,0.28,56.02,USD,0.02,CALL SPY 696.0000 20260113,1/13/2026 12:04:43:387,1224114155LEG1      
+11896756,Margin,T,Sell,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.74,147.97,USD,0.03,CALL SPY 695.0000 20260113,1/13/2026 11:51:53:350,1224098951LEG1      
+11896756,Margin,T,Sell,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.34,67.97,USD,0.03,CALL SPY 695.0000 20260113,1/13/2026 12:38:38:740,1224137184LEG1      
+11896756,Margin,T,Buy,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.4,80.02,USD,0.02,CALL SPY 695.0000 20260113,1/13/2026 12:33:29:593,1224137190LEG1      
+11896756,Margin,T,Buy,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.5,100.02,USD,0.02,CALL SPY 695.0000 20260113,1/13/2026 11:47:17:157,1224097458LEG1      
+11896756,Margin,T,Sell,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.57,113.97,USD,0.03,CALL SPY 694.0000 20260112,1/12/2026 10:10:11:143,1223557191LEG1      
+11896756,Margin,T,Sell,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.7,139.97,USD,0.03,CALL SPY 694.0000 20260112,1/12/2026 09:55:12:640,1223535069LEG1      
+11896756,Margin,T,Buy,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.76,152.02,USD,0.02,CALL SPY 694.0000 20260112,1/12/2026 09:54:17:303,1223532000LEG1      
+11896756,Margin,T,Buy,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.66,132.02,USD,0.02,CALL SPY 694.0000 20260112,1/12/2026 10:08:21:367,1223554720LEG1      
+11896756,Margin,T,Sell,200,="SPY260112C693202601",,SPY260112C693,CALL,SPY   ,1/12/2026,693.0000,1/12/2026,1/13/2026,1/12/2026,1.29,257.97,USD,0.03,CALL SPY 693.0000 20260112,1/12/2026 09:50:37:093,1223527068LEG1      
+11896756,Margin,T,Buy,200,="SPY260112C693202601",,SPY260112C693,CALL,SPY   ,1/12/2026,693.0000,1/12/2026,1/13/2026,1/12/2026,0.98,196.02,USD,0.02,CALL SPY 693.0000 20260112,1/12/2026 09:48:01:463,1223522287LEG1      
+11896756,Margin,T,Sell,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.44,131.95,USD,0.05,PUT SPY 687.0000 20260108,1/8/2026 10:07:33:950,1222589455LEG1      
+11896756,Margin,T,Sell,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.84,251.95,USD,0.05,PUT SPY 687.0000 20260108,1/8/2026 09:42:55:243,1222536720LEG1      
+11896756,Margin,T,Buy,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.73,219.04,USD,0.04,PUT SPY 687.0000 20260108,1/8/2026 09:42:38:480,1222536024LEG1      
+11896756,Margin,T,Buy,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.54,162.04,USD,0.04,PUT SPY 687.0000 20260108,1/8/2026 10:06:33:713,1222589460LEG1      
+11896756,Margin,T,Sell,100,="SPY260108P686202601",,SPY260108P686,PUT,SPY   ,1/8/2026,686.0000,1/8/2026,1/9/2026,1/8/2026,0.5,49.98,USD,0.02,PUT SPY 686.0000 20260108,1/8/2026 10:04:39:227,1222584577LEG1      
+11896756,Margin,T,Buy,100,="SPY260108P686202601",,SPY260108P686,PUT,SPY   ,1/8/2026,686.0000,1/8/2026,1/9/2026,1/8/2026,0.59,59.02,USD,0.02,PUT SPY 686.0000 20260108,1/8/2026 10:03:38:060,1222582447LEG1      
+11896756,Margin,T,Sell,400,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.4,159.94,USD,0.06,PUT SPY 690.0000 20260107,1/7/2026 10:25:02:777,1222121247LEG1      
+11896756,Margin,T,Sell,500,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.48,239.92,USD,0.08,PUT SPY 690.0000 20260107,1/7/2026 10:04:11:323,1222081299LEG1      
+11896756,Margin,T,Buy,400,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.47,188.05,USD,0.05,PUT SPY 690.0000 20260107,1/7/2026 10:23:32:463,1222118977LEG1      
+11896756,Margin,T,Buy,500,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.41,205.06,USD,0.06,PUT SPY 690.0000 20260107,1/7/2026 10:01:25:033,1222076196LEG1      
+11896756,Margin,T,Sell,200,="SPY260107C693202601",,SPY260107C693,CALL,SPY   ,1/7/2026,693.0000,1/7/2026,1/8/2026,1/7/2026,0.52,103.97,USD,0.03,CALL SPY 693.0000 20260107,1/7/2026 10:00:29:830,1222073787LEG1      
+11896756,Margin,T,Buy,200,="SPY260107C693202601",,SPY260107C693,CALL,SPY   ,1/7/2026,693.0000,1/7/2026,1/8/2026,1/7/2026,0.8,160.02,USD,0.02,CALL SPY 693.0000 20260107,1/7/2026 09:53:05:750,1222053454LEG1      
+11896756,Margin,T,Sell,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.16,31.97,USD,0.03,PUT SPY 691.0000 20260106,1/6/2026 14:00:34:117,1221851364LEG1      
+11896756,Margin,T,Sell,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.21,41.97,USD,0.03,PUT SPY 691.0000 20260106,1/6/2026 13:48:58:097,1221846259LEG1      
+11896756,Margin,T,Buy,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.22,44.02,USD,0.02,PUT SPY 691.0000 20260106,1/6/2026 13:52:40:997,1221851366LEG1      
+11896756,Margin,T,Buy,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.22,44.02,USD,0.02,PUT SPY 691.0000 20260106,1/6/2026 13:48:57:863,1221846260LEG1      
+11896756,Margin,T,Sell,300,="SPY260106C691202601",,SPY260106C691,CALL,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.48,143.95,USD,0.05,CALL SPY 691.0000 20260106,1/6/2026 13:16:05:777,1221823966LEG1      
+11896756,Margin,T,Buy,300,="SPY260106C691202601",,SPY260106C691,CALL,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.36,108.04,USD,0.04,CALL SPY 691.0000 20260106,1/6/2026 13:09:14:760,1221823474LEG1      
+11896756,Margin,T,Sell,400,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.24,95.94,USD,0.06,PUT SPY 687.0000 20260105,1/5/2026 14:50:45:867,1221448552LEG1      
+11896756,Margin,T,Sell,100,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.26,25.98,USD,0.02,PUT SPY 687.0000 20260105,1/5/2026 14:55:57:637,1221450751LEG1      
+11896756,Margin,T,Buy,100,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.25,25.02,USD,0.02,PUT SPY 687.0000 20260105,1/5/2026 14:54:23:427,1221450694LEG1      
+11896756,Margin,T,Buy,400,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.19,76.05,USD,0.05,PUT SPY 687.0000 20260105,1/5/2026 14:50:06:297,1221448423LEG1      
+11896756,Margin,T,Sell,300,="SPY260102P684202601",,SPY260102P684,PUT,SPY   ,1/2/2026,684.0000,1/2/2026,1/5/2026,1/2/2026,0.47,140.95,USD,0.05,PUT SPY 684.0000 20260102,1/2/2026 09:47:55:173,1220618514LEG1      
+11896756,Margin,T,Buy,300,="SPY260102P684202601",,SPY260102P684,PUT,SPY   ,1/2/2026,684.0000,1/2/2026,1/5/2026,1/2/2026,0.7,210.04,USD,0.04,PUT SPY 684.0000 20260102,1/2/2026 09:45:14:880,1220602647LEG1      
+11896756,Margin,T,Sell,300,="SPY260102C687202601",,SPY260102C687,CALL,SPY   ,1/2/2026,687.0000,1/2/2026,1/5/2026,1/2/2026,0.83,248.95,USD,0.05,CALL SPY 687.0000 20260102,1/2/2026 10:01:54:887,1220635131LEG1      
+11896756,Margin,T,Buy,300,="SPY260102C687202601",,SPY260102C687,CALL,SPY   ,1/2/2026,687.0000,1/2/2026,1/5/2026,1/2/2026,0.69333333,208.04,USD,0.04,CALL SPY 687.0000 20260102,1/2/2026 09:52:54:307,1220627226LEG1      
+11896756,Margin,T,Sell,100,="SPY260102C683202601",,SPY260102C683,CALL,SPY   ,1/2/2026,683.0000,1/2/2026,1/5/2026,1/2/2026,1.24,123.98,USD,0.02,CALL SPY 683.0000 20260102,1/2/2026 10:33:03:050,1220723423LEG1      
+11896756,Margin,T,Buy,100,="SPY260102C683202601",,SPY260102C683,CALL,SPY   ,1/2/2026,683.0000,1/2/2026,1/5/2026,1/2/2026,0.95,95.02,USD,0.02,CALL SPY 683.0000 20260102,1/2/2026 10:29:17:567,1220711856LEG1`;
+
+        let trades = [];
+        let dailyPL = {};
+        let currentMonth = 0;
+        let currentYear = 2026;
+
+        // Parse CSV
+        function parseCSV() {
+            const lines = csvData.trim().split('\n');
+            const headers = lines[0].split(',');
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                if (values.length > 1) {
+                    const trade = {};
+                    headers.forEach((header, index) => {
+                        trade[header] = values[index];
+                    });
+                    trades.push(trade);
+                }
+            }
+        }
+
+        // Calculate daily P/L
+        function calculateDailyPL() {
+            dailyPL = {};
+            
+            trades.forEach(trade => {
+                const date = trade['Activity Date'];
+                const transaction = trade['Transaction'];
+                const amount = parseFloat(trade['Amount']);
+                const commission = parseFloat(trade['Commission']);
+                
+                if (!dailyPL[date]) {
+                    dailyPL[date] = {
+                        totalPL: 0,
+                        trades: [],
+                        buyTotal: 0,
+                        sellTotal: 0,
+                        commissions: 0
+                    };
+                }
+                
+                dailyPL[date].trades.push(trade);
+                dailyPL[date].commissions += commission;
+                
+                if (transaction === 'Buy') {
+                    dailyPL[date].buyTotal += amount;
+                    dailyPL[date].totalPL -= (amount + commission);
+                } else if (transaction === 'Sell') {
+                    dailyPL[date].sellTotal += amount;
+                    dailyPL[date].totalPL += (amount - commission);
+                }
+            });
+        }
+
+        // Update statistics
+        function updateStats() {
+            let totalPL = 0;
+            let winningDays = 0;
+            let tradingDays = Object.keys(dailyPL).length;
+            
+            Object.values(dailyPL).forEach(day => {
+                totalPL += day.totalPL;
+                if (day.totalPL > 0) winningDays++;
+            });
+            
+            const winRate = tradingDays > 0 ? (winningDays / tradingDays * 100).toFixed(1) : 0;
+            const avgPL = tradingDays > 0 ? (totalPL / tradingDays).toFixed(2) : 0;
+            
+            document.getElementById('totalPL').textContent = '$' + totalPL.toFixed(2);
+            document.getElementById('totalPL').className = 'value ' + (totalPL >= 0 ? 'positive' : 'negative');
+            document.getElementById('totalTrades').textContent = trades.length;
+            document.getElementById('winRate').textContent = winRate + '%';
+            document.getElementById('avgPL').textContent = '$' + avgPL;
+            document.getElementById('avgPL').className = 'value ' + (avgPL >= 0 ? 'positive' : 'negative');
+        }
+
+        // Create P/L chart
+        function createChart() {
+            const sortedDates = Object.keys(dailyPL).sort((a, b) => new Date(a) - new Date(b));
+            let cumulative = 0;
+            const cumulativePL = sortedDates.map(date => {
+                cumulative += dailyPL[date].totalPL;
+                return cumulative;
+            });
+            
+            const ctx = document.getElementById('plChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: sortedDates,
+                    datasets: [{
+                        label: 'Cumulative P/L',
+                        data: cumulativePL,
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 5,
+                        pointHoverRadius: 7,
+                        pointBackgroundColor: '#667eea'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'P/L: $' + context.parsed.y.toFixed(2);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toFixed(0);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create calendar
+        function updateCalendar() {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            
+            const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            daysOfWeek.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day-header';
+                dayHeader.textContent = day;
+                calendar.appendChild(dayHeader);
+            });
+            
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const startingDayOfWeek = firstDay.getDay();
+            const totalDays = lastDay.getDate();
+            
+            for (let i = 0; i < startingDayOfWeek; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day empty';
+                calendar.appendChild(emptyDay);
+            }
+            
+            for (let day = 1; day <= totalDays; day++) {
+                const dateStr = `${currentMonth + 1}/${day}/${currentYear}`;
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+                
+                const dateDiv = document.createElement('div');
+                dateDiv.className = 'date';
+                dateDiv.textContent = day;
+                dayDiv.appendChild(dateDiv);
+                
+                if (dailyPL[dateStr]) {
+                    dayDiv.classList.add('has-trades');
+                    const pl = dailyPL[dateStr].totalPL;
+                    const plDiv = document.createElement('div');
+                    plDiv.className = 'pl-amount ' + (pl >= 0 ? 'positive' : 'negative');
+                    plDiv.textContent = '$' + pl.toFixed(2);
+                    dayDiv.appendChild(plDiv);
+                    
+                    const countDiv = document.createElement('div');
+                    countDiv.className = 'trade-count';
+                    countDiv.textContent = dailyPL[dateStr].trades.length + ' trades';
+                    dayDiv.appendChild(countDiv);
+                    
+                    dayDiv.onclick = () => showTradeDetails(dateStr);
+                }
+                
+                calendar.appendChild(dayDiv);
+            }
+        }
+
+        // Show trade details in modal
+        function showTradeDetails(date) {
+            const modal = document.getElementById('tradeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalTitle.textContent = `Trades for ${date}`;
+            
+            const dayData = dailyPL[date];
+            let html = `
+                <div style="margin-bottom: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px;">
+                    <h3>Daily Summary</h3>
+                    <p><strong>Total P/L:</strong> <span class="${dayData.totalPL >= 0 ? 'positive' : 'negative'}" style="font-size: 1.2em;">$${dayData.totalPL.toFixed(2)}</span></p>
+                    <p><strong>Buy Total:</strong> $${dayData.buyTotal.toFixed(2)}</p>
+                    <p><strong>Sell Total:</strong> $${dayData.sellTotal.toFixed(2)}</p>
+                    <p><strong>Total Commissions:</strong> $${dayData.commissions.toFixed(2)}</p>
+                </div>
+            `;
+            
+            dayData.trades.forEach(trade => {
+                html += `
+                    <div class="trade-item ${trade.Transaction.toLowerCase()}">
+                        <strong>${trade.Transaction}</strong> ${trade.Quantity} ${trade.Description}<br>
+                        <small>Time: ${trade['Activity Time']}</small><br>
+                        <small>Price: $${trade.Price} | Amount: $${trade.Amount} | Commission: $${trade.Commission}</small>
+                    </div>
+                `;
+            });
+            
+            modalBody.innerHTML = html;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('tradeModal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('tradeModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        function previousMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateMonthSelector();
+            updateCalendar();
+        }
+
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateMonthSelector();
+            updateCalendar();
+        }
+
+        function updateMonthSelector() {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('monthSelect').value = currentMonth;
+            document.getElementById('monthSelect').innerHTML = 
+                `<option value="${currentMonth}">${months[currentMonth]} ${currentYear}</option>`;
+        }
+
+        // Initialize
+        parseCSV();
+        calculateDailyPL();
+        updateStats();
+        createChart();
+        updateMonthSelector();
+        updateCalendar();
+    </script>
+</body>
+</html>
