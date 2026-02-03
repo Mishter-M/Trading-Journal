@@ -16,10 +16,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a1b1f;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.1) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+            background: #000000;
             min-height: 100vh;
             padding: 20px;
             color: #e2e8f0;
@@ -28,195 +25,180 @@
         .container {
             max-width: 1600px;
             margin: 0 auto;
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             color: white;
-            padding: 40px;
+            padding: 48px 40px 32px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            font-weight: 700;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+            letter-spacing: -0.5px;
         }
 
         .header p {
-            color: #94a3b8;
-            font-size: 1.1em;
+            color: #71717a;
+            font-size: 0.95em;
             font-weight: 400;
+            margin-bottom: 32px;
         }
 
         .upload-section {
-            margin-top: 30px;
+            margin-top: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 16px;
             flex-wrap: wrap;
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 24px 32px;
-            max-width: 700px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            max-width: 100%;
             margin-left: auto;
             margin-right: auto;
         }
 
         .upload-btn {
             cursor: pointer;
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            color: white;
-            padding: 16px 40px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.05em;
+            background: #18181b;
+            color: #e4e4e7;
+            padding: 14px 36px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95em;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .upload-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
-            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            background: #27272a;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
         .upload-btn:active {
-            transform: translateY(-1px);
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
         .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            padding: 40px;
+            gap: 32px;
+            padding: 32px 40px;
             background: transparent;
         }
 
         .stat-card {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
-            padding: 28px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            border: none;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 12px 30px rgba(139, 92, 246, 0.2);
+            background: transparent;
+            transform: translateY(-2px);
         }
 
         .stat-card h3 {
-            color: #94a3b8;
-            font-size: 0.85em;
+            color: #71717a;
+            font-size: 0.75em;
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .stat-card .value {
             font-size: 2.5em;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: -1px;
         }
 
-        .stat-card .positive {
-            color: #34d399;
+        .stat-card .value.positive {
+            color: #22c55e;
         }
 
-        .stat-card .negative {
-            color: #f87171;
+        .stat-card .value.negative {
+            color: #ef4444;
         }
 
         .chart-container {
-            padding: 40px;
+            padding: 32px 40px;
             background: transparent;
         }
 
         .chart-container h2 {
-            color: #e2e8f0;
-            font-weight: 600;
-            margin-bottom: 24px;
-            font-size: 1.5em;
+            color: #e4e4e7;
+            font-weight: 500;
+            margin-bottom: 20px;
+            font-size: 1.3em;
         }
 
         .time-range-selector {
             display: flex;
-            gap: 4px;
-            background: rgba(30, 41, 59, 0.5);
-            padding: 4px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 2px;
+            background: #18181b;
+            padding: 3px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .time-btn {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: transparent;
-            color: #94a3b8;
+            color: #71717a;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.85em;
+            font-weight: 500;
+            transition: all 0.2s ease;
             font-family: 'Inter', sans-serif;
         }
 
         .time-btn:hover {
-            background: rgba(59, 130, 246, 0.1);
-            color: #60a5fa;
+            color: #e4e4e7;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .time-btn.active {
-            background: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+            background: #27272a;
+            color: #ffffff;
         }
 
         .chart-wrapper {
             position: relative;
-            height: 450px;
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
+            height: 400px;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
         }
 
         .calendar-container {
-            padding: 40px;
+            padding: 32px 40px;
             background: transparent;
         }
 
@@ -224,48 +206,47 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 16px;
         }
 
         .calendar-header h2 {
-            color: #e2e8f0;
-            font-weight: 600;
-            font-size: 1.5em;
+            color: #e4e4e7;
+            font-weight: 500;
+            font-size: 1.3em;
         }
 
         .month-selector {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: center;
         }
 
         .month-selector button {
-            padding: 10px 18px;
-            background: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            border-radius: 10px;
+            padding: 8px 16px;
+            background: #18181b;
+            color: #e4e4e7;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
 
         .month-selector button:hover {
-            background: rgba(59, 130, 246, 0.3);
-            border-color: rgba(59, 130, 246, 0.5);
-            transform: scale(1.05);
+            background: #27272a;
+            border-color: rgba(255, 255, 255, 0.12);
         }
 
         .month-selector select {
-            padding: 10px 16px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            background: rgba(30, 41, 59, 0.5);
-            color: #e2e8f0;
-            font-size: 1em;
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #18181b;
+            color: #e4e4e7;
+            font-size: 0.95em;
             font-weight: 500;
             cursor: pointer;
         }
@@ -273,81 +254,76 @@
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 12px;
-            background: rgba(30, 41, 59, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 8px;
+            background: #0a0a0a;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             width: 100%;
-            overflow-x: auto;
         }
 
         .calendar-day-header {
             text-align: center;
-            font-weight: 600;
-            padding: 12px;
-            color: #60a5fa;
-            font-size: 0.9em;
+            font-weight: 500;
+            padding: 10px;
+            color: #71717a;
+            font-size: 0.8em;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         .calendar-day {
             aspect-ratio: 1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: rgba(15, 23, 42, 0.5);
-            transition: all 0.3s ease;
+            background: #18181b;
+            transition: all 0.2s ease;
             min-width: 0;
-            word-wrap: break-word;
         }
 
         .calendar-day:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.2);
-            border-color: rgba(139, 92, 246, 0.5);
+            background: #1c1c1f;
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .calendar-day.empty {
-            background: rgba(15, 23, 42, 0.2);
-            border: 1px dashed rgba(255, 255, 255, 0.05);
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         .calendar-day.has-trades {
             cursor: pointer;
-            background: rgba(30, 41, 59, 0.6);
         }
 
         .calendar-day .date {
-            font-weight: 600;
-            color: #e2e8f0;
-            font-size: 1.1em;
+            font-weight: 500;
+            color: #e4e4e7;
+            font-size: 1em;
         }
 
         .calendar-day .pl-amount {
-            font-size: 0.9em;
-            font-weight: 700;
-            margin-top: 8px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 6px;
         }
 
         .calendar-day .pl-amount.positive {
-            color: #34d399;
+            color: #22c55e;
         }
 
         .calendar-day .pl-amount.negative {
-            color: #f87171;
+            color: #ef4444;
         }
 
         .calendar-day .trade-count {
-            font-size: 0.75em;
-            color: #94a3b8;
+            font-size: 0.7em;
+            color: #71717a;
             margin-top: 4px;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .modal {
@@ -358,98 +334,88 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.85);
         }
 
         .modal-content {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
-            backdrop-filter: blur(20px);
+            background: #0a0a0a;
             margin: 50px auto;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 32px;
+            border-radius: 12px;
             max-width: 900px;
             max-height: 85vh;
             overflow-y: auto;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .modal-content h2 {
-            color: #e2e8f0;
-            margin-bottom: 24px;
+            color: #e4e4e7;
+            margin-bottom: 20px;
+            font-weight: 500;
         }
 
         .close {
-            color: #94a3b8;
+            color: #71717a;
             float: right;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 300;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .close:hover {
-            color: #60a5fa;
-            transform: rotate(90deg);
-        }
-
-        .trade-details {
-            margin-top: 20px;
+            color: #e4e4e7;
         }
 
         .trade-item {
-            padding: 20px;
-            margin-bottom: 12px;
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 12px;
-            border-left: 4px solid #3b82f6;
-            transition: all 0.3s ease;
+            padding: 16px;
+            margin-bottom: 10px;
+            background: #18181b;
+            border-radius: 8px;
+            border-left: 3px solid #71717a;
+            transition: all 0.2s ease;
         }
 
         .trade-item:hover {
-            background: rgba(30, 41, 59, 0.8);
-            transform: translateX(4px);
+            background: #1c1c1f;
         }
 
         .trade-item.buy {
-            border-left-color: #f87171;
+            border-left-color: #ef4444;
         }
 
         .trade-item.sell {
-            border-left-color: #34d399;
+            border-left-color: #22c55e;
         }
 
         .trade-item strong {
-            color: #e2e8f0;
+            color: #e4e4e7;
         }
 
         .trade-item small {
-            color: #94a3b8;
+            color: #71717a;
         }
 
         .info-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: rgba(59, 130, 246, 0.15);
-            color: #60a5fa;
-            border: 1.5px solid rgba(59, 130, 246, 0.3);
+            width: 28px;
+            height: 28px;
+            background: #18181b;
+            color: #71717a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 50%;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.2);
+            transition: all 0.2s ease;
         }
 
         .info-icon:hover {
-            background: rgba(59, 130, 246, 0.25);
-            border-color: rgba(59, 130, 246, 0.6);
-            transform: scale(1.15) rotate(15deg);
-            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            background: #27272a;
+            color: #e4e4e7;
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .info-modal {
@@ -460,29 +426,26 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.85);
         }
 
         .info-modal-content {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
-            backdrop-filter: blur(20px);
+            background: #0a0a0a;
             margin: 100px auto;
-            padding: 40px;
-            border-radius: 20px;
+            padding: 32px;
+            border-radius: 12px;
             max-width: 650px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .info-modal-content h3 {
-            color: #60a5fa;
-            margin-bottom: 20px;
-            font-weight: 600;
+            color: #e4e4e7;
+            margin-bottom: 16px;
+            font-weight: 500;
         }
 
         .info-modal-content p {
-            color: #94a3b8;
+            color: #71717a;
             line-height: 1.6;
         }
 
@@ -492,9 +455,9 @@
         }
 
         .info-modal-content li {
-            padding: 12px 0;
+            padding: 10px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #e2e8f0;
+            color: #e4e4e7;
         }
 
         .info-modal-content li:last-child {
@@ -502,25 +465,28 @@
         }
 
         .required {
-            color: #f87171;
-            font-weight: 600;
+            color: #ef4444;
+            font-weight: 500;
         }
 
         .optional {
-            color: #34d399;
-            font-weight: 600;
+            color: #22c55e;
+            font-weight: 500;
         }
 
         #fileName {
-            color: #94a3b8;
-            font-size: 0.95em;
+            color: #22c55e;
+            font-size: 0.9em;
             font-weight: 500;
-            background: rgba(15, 23, 42, 0.6);
-            padding: 10px 20px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            min-width: 200px;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            border: none;
+            min-width: auto;
             text-align: center;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         #fileName:empty {
@@ -529,20 +495,20 @@
 
         /* Scrollbar Styling */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.5);
+            background: #0a0a0a;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(139, 92, 246, 0.5);
-            border-radius: 5px;
+            background: #27272a;
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(139, 92, 246, 0.7);
+            background: #3f3f46;
         }
 
         @media (max-width: 768px) {
@@ -555,25 +521,26 @@
             }
 
             .header {
-                padding: 24px 16px;
+                padding: 32px 20px 24px;
             }
 
             .header h1 {
-                font-size: 1.6em;
+                font-size: 1.8em;
+                letter-spacing: -0.3px;
             }
 
             .header p {
-                font-size: 0.95em;
+                font-size: 0.9em;
+                margin-bottom: 24px;
             }
 
             .upload-section {
-                padding: 16px;
-                gap: 10px;
+                gap: 12px;
             }
 
             .upload-btn {
-                padding: 12px 24px;
-                font-size: 0.95em;
+                padding: 12px 28px;
+                font-size: 0.9em;
             }
 
             .stats-container {
@@ -707,7 +674,16 @@
 
         @media (max-width: 480px) {
             .header h1 {
-                font-size: 1.4em;
+                font-size: 1.6em;
+            }
+
+            .header p {
+                font-size: 0.85em;
+            }
+
+            .upload-btn {
+                padding: 11px 24px;
+                font-size: 0.85em;
             }
 
             .stats-container {
@@ -891,75 +867,6 @@
         function showUploadPrompt() {
             document.getElementById('fileName').innerHTML = '<span style="color: #fbbf24;">⚠️ Please upload a CSV file to get started</span>';
         }
-
-        // Sample embedded CSV data (for reference - not used)
-        const sampleCSVData = `Account Number,Type,TradeInd,Transaction,Quantity,Cusip,ADP,Symbol,CallPut,UnderlyingSymbol,ExpireDate,StrikePrice,TD,SD,Activity Date,Price,Amount,CurrencyCode,Commission,Description,Activity Time,Order ID
-11896756,Margin,T,Sell,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.84,167.97,USD,0.03,PUT SPY 693.0000 20260116,1/16/2026 09:46:19:593,1225348729LEG1      
-11896756,Margin,T,Buy,200,="SPY260116P693202601",,SPY260116P693,PUT,SPY   ,1/16/2026,693.0000,1/16/2026,1/20/2026,1/16/2026,0.8,160.02,USD,0.02,PUT SPY 693.0000 20260116,1/16/2026 09:45:48:553,1225346910LEG1      
-11896756,Margin,T,Sell,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.45,179.94,USD,0.06,PUT SPY 690.0000 20260116,1/16/2026 10:12:30:797,1225396433LEG1      
-11896756,Margin,T,Sell,100,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.65,64.98,USD,0.02,PUT SPY 690.0000 20260116,1/16/2026 10:19:45:030,1225398521LEG1      
-11896756,Margin,T,Sell,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.43,171.94,USD,0.06,PUT SPY 690.0000 20260116,1/16/2026 10:06:40:097,1225385677LEG1      
-11896756,Margin,T,Buy,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.53,212.05,USD,0.05,PUT SPY 690.0000 20260116,1/16/2026 10:05:19:963,1225380239LEG1      
-11896756,Margin,T,Buy,100,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.45,45.02,USD,0.02,PUT SPY 690.0000 20260116,1/16/2026 10:13:38:323,1225397885LEG1      
-11896756,Margin,T,Buy,400,="SPY260116P690202601",,SPY260116P690,PUT,SPY   ,1/16/2026,690.0000,1/16/2026,1/20/2026,1/16/2026,0.39,156.05,USD,0.05,PUT SPY 690.0000 20260116,1/16/2026 10:12:10:697,1225394874LEG1      
-11896756,Margin,T,Sell,200,="SPY260115P691202601",,SPY260115P691,PUT,SPY   ,1/15/2026,691.0000,1/15/2026,1/16/2026,1/15/2026,0.16,31.97,USD,0.03,PUT SPY 691.0000 20260115,1/15/2026 15:10:02:877,1225204415LEG1      
-11896756,Margin,T,Buy,200,="SPY260115P691202601",,SPY260115P691,PUT,SPY   ,1/15/2026,691.0000,1/15/2026,1/16/2026,1/15/2026,0.12,24.02,USD,0.02,PUT SPY 691.0000 20260115,1/15/2026 15:04:14:620,1225202991LEG1      
-11896756,Margin,T,Sell,400,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.22,87.94,USD,0.06,CALL SPY 696.0000 20260115,1/15/2026 11:35:04:403,1225037052LEG1      
-11896756,Margin,T,Sell,500,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.36,179.92,USD,0.08,CALL SPY 696.0000 20260115,1/15/2026 11:51:22:637,1225052775LEG1      
-11896756,Margin,T,Buy,500,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.29,145.06,USD,0.06,CALL SPY 696.0000 20260115,1/15/2026 11:45:47:233,1225047905LEG1      
-11896756,Margin,T,Buy,400,="SPY260115C696202601",,SPY260115C696,CALL,SPY   ,1/15/2026,696.0000,1/15/2026,1/16/2026,1/15/2026,0.29,116.05,USD,0.05,CALL SPY 696.0000 20260115,1/15/2026 11:30:04:527,1225035846LEG1      
-11896756,Margin,T,Sell,400,="SPY260115C695202601",,SPY260115C695,CALL,SPY   ,1/15/2026,695.0000,1/15/2026,1/16/2026,1/15/2026,0.72,287.94,USD,0.06,CALL SPY 695.0000 20260115,1/15/2026 10:34:59:620,1224961785LEG1      
-11896756,Margin,T,Buy,400,="SPY260115C695202601",,SPY260115C695,CALL,SPY   ,1/15/2026,695.0000,1/15/2026,1/16/2026,1/15/2026,0.61,244.05,USD,0.05,CALL SPY 695.0000 20260115,1/15/2026 10:25:13:910,1224955860LEG1      
-11896756,Margin,T,Sell,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,0.51,101.97,USD,0.03,PUT SPY 687.0000 20260114,1/14/2026 11:39:33:107,1224551453LEG1      
-11896756,Margin,T,Sell,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,1.19,237.97,USD,0.03,PUT SPY 687.0000 20260114,1/14/2026 10:47:24:443,1224486460LEG1      
-11896756,Margin,T,Buy,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,0.99,198.02,USD,0.02,PUT SPY 687.0000 20260114,1/14/2026 10:45:07:153,1224484556LEG1      
-11896756,Margin,T,Buy,200,="SPY260114P687202601",,SPY260114P687,PUT,SPY   ,1/14/2026,687.0000,1/14/2026,1/15/2026,1/14/2026,0.46,92.02,USD,0.02,PUT SPY 687.0000 20260114,1/14/2026 11:25:31:907,1224534134LEG1      
-11896756,Margin,T,Sell,300,="SPY260114P685202601",,SPY260114P685,PUT,SPY   ,1/14/2026,685.0000,1/14/2026,1/15/2026,1/14/2026,0.1,29.95,USD,0.05,PUT SPY 685.0000 20260114,1/14/2026 13:55:28:773,1224674457LEG1      
-11896756,Margin,T,Buy,300,="SPY260114P685202601",,SPY260114P685,PUT,SPY   ,1/14/2026,685.0000,1/14/2026,1/15/2026,1/14/2026,0.16,48.04,USD,0.04,PUT SPY 685.0000 20260114,1/14/2026 13:48:23:677,1224663757LEG1      
-11896756,Margin,T,Sell,200,="SPY260114C691202601",,SPY260114C691,CALL,SPY   ,1/14/2026,691.0000,1/14/2026,1/15/2026,1/14/2026,0.8,159.97,USD,0.03,CALL SPY 691.0000 20260114,1/14/2026 10:20:13:347,1224447951LEG1      
-11896756,Margin,T,Buy,200,="SPY260114C691202601",,SPY260114C691,CALL,SPY   ,1/14/2026,691.0000,1/14/2026,1/15/2026,1/14/2026,1.05,210.02,USD,0.02,CALL SPY 691.0000 20260114,1/14/2026 10:18:23:313,1224436954LEG1      
-11896756,Margin,T,Sell,100,="SPY260113P692202601",,SPY260113P692,PUT,SPY   ,1/13/2026,692.0000,1/13/2026,1/14/2026,1/13/2026,0.21,20.98,USD,0.02,PUT SPY 692.0000 20260113,1/13/2026 11:35:08:663,1224085050LEG1      
-11896756,Margin,T,Buy,100,="SPY260113P692202601",,SPY260113P692,PUT,SPY   ,1/13/2026,692.0000,1/13/2026,1/14/2026,1/13/2026,0.32,32.02,USD,0.02,PUT SPY 692.0000 20260113,1/13/2026 11:31:59:527,1224080873LEG1      
-11896756,Margin,T,Sell,200,="SPY260113C696202601",,SPY260113C696,CALL,SPY   ,1/13/2026,696.0000,1/13/2026,1/14/2026,1/13/2026,0.22,43.97,USD,0.03,CALL SPY 696.0000 20260113,1/13/2026 12:09:30:337,1224114366LEG1      
-11896756,Margin,T,Buy,200,="SPY260113C696202601",,SPY260113C696,CALL,SPY   ,1/13/2026,696.0000,1/13/2026,1/14/2026,1/13/2026,0.28,56.02,USD,0.02,CALL SPY 696.0000 20260113,1/13/2026 12:04:43:387,1224114155LEG1      
-11896756,Margin,T,Sell,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.74,147.97,USD,0.03,CALL SPY 695.0000 20260113,1/13/2026 11:51:53:350,1224098951LEG1      
-11896756,Margin,T,Sell,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.34,67.97,USD,0.03,CALL SPY 695.0000 20260113,1/13/2026 12:38:38:740,1224137184LEG1      
-11896756,Margin,T,Buy,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.4,80.02,USD,0.02,CALL SPY 695.0000 20260113,1/13/2026 12:33:29:593,1224137190LEG1      
-11896756,Margin,T,Buy,200,="SPY260113C695202601",,SPY260113C695,CALL,SPY   ,1/13/2026,695.0000,1/13/2026,1/14/2026,1/13/2026,0.5,100.02,USD,0.02,CALL SPY 695.0000 20260113,1/13/2026 11:47:17:157,1224097458LEG1      
-11896756,Margin,T,Sell,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.57,113.97,USD,0.03,CALL SPY 694.0000 20260112,1/12/2026 10:10:11:143,1223557191LEG1      
-11896756,Margin,T,Sell,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.7,139.97,USD,0.03,CALL SPY 694.0000 20260112,1/12/2026 09:55:12:640,1223535069LEG1      
-11896756,Margin,T,Buy,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.76,152.02,USD,0.02,CALL SPY 694.0000 20260112,1/12/2026 09:54:17:303,1223532000LEG1      
-11896756,Margin,T,Buy,200,="SPY260112C694202601",,SPY260112C694,CALL,SPY   ,1/12/2026,694.0000,1/12/2026,1/13/2026,1/12/2026,0.66,132.02,USD,0.02,CALL SPY 694.0000 20260112,1/12/2026 10:08:21:367,1223554720LEG1      
-11896756,Margin,T,Sell,200,="SPY260112C693202601",,SPY260112C693,CALL,SPY   ,1/12/2026,693.0000,1/12/2026,1/13/2026,1/12/2026,1.29,257.97,USD,0.03,CALL SPY 693.0000 20260112,1/12/2026 09:50:37:093,1223527068LEG1      
-11896756,Margin,T,Buy,200,="SPY260112C693202601",,SPY260112C693,CALL,SPY   ,1/12/2026,693.0000,1/12/2026,1/13/2026,1/12/2026,0.98,196.02,USD,0.02,CALL SPY 693.0000 20260112,1/12/2026 09:48:01:463,1223522287LEG1      
-11896756,Margin,T,Sell,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.44,131.95,USD,0.05,PUT SPY 687.0000 20260108,1/8/2026 10:07:33:950,1222589455LEG1      
-11896756,Margin,T,Sell,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.84,251.95,USD,0.05,PUT SPY 687.0000 20260108,1/8/2026 09:42:55:243,1222536720LEG1      
-11896756,Margin,T,Buy,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.73,219.04,USD,0.04,PUT SPY 687.0000 20260108,1/8/2026 09:42:38:480,1222536024LEG1      
-11896756,Margin,T,Buy,300,="SPY260108P687202601",,SPY260108P687,PUT,SPY   ,1/8/2026,687.0000,1/8/2026,1/9/2026,1/8/2026,0.54,162.04,USD,0.04,PUT SPY 687.0000 20260108,1/8/2026 10:06:33:713,1222589460LEG1      
-11896756,Margin,T,Sell,100,="SPY260108P686202601",,SPY260108P686,PUT,SPY   ,1/8/2026,686.0000,1/8/2026,1/9/2026,1/8/2026,0.5,49.98,USD,0.02,PUT SPY 686.0000 20260108,1/8/2026 10:04:39:227,1222584577LEG1      
-11896756,Margin,T,Buy,100,="SPY260108P686202601",,SPY260108P686,PUT,SPY   ,1/8/2026,686.0000,1/8/2026,1/9/2026,1/8/2026,0.59,59.02,USD,0.02,PUT SPY 686.0000 20260108,1/8/2026 10:03:38:060,1222582447LEG1      
-11896756,Margin,T,Sell,400,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.4,159.94,USD,0.06,PUT SPY 690.0000 20260107,1/7/2026 10:25:02:777,1222121247LEG1      
-11896756,Margin,T,Sell,500,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.48,239.92,USD,0.08,PUT SPY 690.0000 20260107,1/7/2026 10:04:11:323,1222081299LEG1      
-11896756,Margin,T,Buy,400,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.47,188.05,USD,0.05,PUT SPY 690.0000 20260107,1/7/2026 10:23:32:463,1222118977LEG1      
-11896756,Margin,T,Buy,500,="SPY260107P690202601",,SPY260107P690,PUT,SPY   ,1/7/2026,690.0000,1/7/2026,1/8/2026,1/7/2026,0.41,205.06,USD,0.06,PUT SPY 690.0000 20260107,1/7/2026 10:01:25:033,1222076196LEG1      
-11896756,Margin,T,Sell,200,="SPY260107C693202601",,SPY260107C693,CALL,SPY   ,1/7/2026,693.0000,1/7/2026,1/8/2026,1/7/2026,0.52,103.97,USD,0.03,CALL SPY 693.0000 20260107,1/7/2026 10:00:29:830,1222073787LEG1      
-11896756,Margin,T,Buy,200,="SPY260107C693202601",,SPY260107C693,CALL,SPY   ,1/7/2026,693.0000,1/7/2026,1/8/2026,1/7/2026,0.8,160.02,USD,0.02,CALL SPY 693.0000 20260107,1/7/2026 09:53:05:750,1222053454LEG1      
-11896756,Margin,T,Sell,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.16,31.97,USD,0.03,PUT SPY 691.0000 20260106,1/6/2026 14:00:34:117,1221851364LEG1      
-11896756,Margin,T,Sell,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.21,41.97,USD,0.03,PUT SPY 691.0000 20260106,1/6/2026 13:48:58:097,1221846259LEG1      
-11896756,Margin,T,Buy,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.22,44.02,USD,0.02,PUT SPY 691.0000 20260106,1/6/2026 13:52:40:997,1221851366LEG1      
-11896756,Margin,T,Buy,200,="SPY260106P691202601",,SPY260106P691,PUT,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.22,44.02,USD,0.02,PUT SPY 691.0000 20260106,1/6/2026 13:48:57:863,1221846260LEG1      
-11896756,Margin,T,Sell,300,="SPY260106C691202601",,SPY260106C691,CALL,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.48,143.95,USD,0.05,CALL SPY 691.0000 20260106,1/6/2026 13:16:05:777,1221823966LEG1      
-11896756,Margin,T,Buy,300,="SPY260106C691202601",,SPY260106C691,CALL,SPY   ,1/6/2026,691.0000,1/6/2026,1/7/2026,1/6/2026,0.36,108.04,USD,0.04,CALL SPY 691.0000 20260106,1/6/2026 13:09:14:760,1221823474LEG1      
-11896756,Margin,T,Sell,400,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.24,95.94,USD,0.06,PUT SPY 687.0000 20260105,1/5/2026 14:50:45:867,1221448552LEG1      
-11896756,Margin,T,Sell,100,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.26,25.98,USD,0.02,PUT SPY 687.0000 20260105,1/5/2026 14:55:57:637,1221450751LEG1      
-11896756,Margin,T,Buy,100,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.25,25.02,USD,0.02,PUT SPY 687.0000 20260105,1/5/2026 14:54:23:427,1221450694LEG1      
-11896756,Margin,T,Buy,400,="SPY260105P687202601",,SPY260105P687,PUT,SPY   ,1/5/2026,687.0000,1/5/2026,1/6/2026,1/5/2026,0.19,76.05,USD,0.05,PUT SPY 687.0000 20260105,1/5/2026 14:50:06:297,1221448423LEG1      
-11896756,Margin,T,Sell,300,="SPY260102P684202601",,SPY260102P684,PUT,SPY   ,1/2/2026,684.0000,1/2/2026,1/5/2026,1/2/2026,0.47,140.95,USD,0.05,PUT SPY 684.0000 20260102,1/2/2026 09:47:55:173,1220618514LEG1      
-11896756,Margin,T,Buy,300,="SPY260102P684202601",,SPY260102P684,PUT,SPY   ,1/2/2026,684.0000,1/2/2026,1/5/2026,1/2/2026,0.7,210.04,USD,0.04,PUT SPY 684.0000 20260102,1/2/2026 09:45:14:880,1220602647LEG1      
-11896756,Margin,T,Sell,300,="SPY260102C687202601",,SPY260102C687,CALL,SPY   ,1/2/2026,687.0000,1/2/2026,1/5/2026,1/2/2026,0.83,248.95,USD,0.05,CALL SPY 687.0000 20260102,1/2/2026 10:01:54:887,1220635131LEG1      
-11896756,Margin,T,Buy,300,="SPY260102C687202601",,SPY260102C687,CALL,SPY   ,1/2/2026,687.0000,1/2/2026,1/5/2026,1/2/2026,0.69333333,208.04,USD,0.04,CALL SPY 687.0000 20260102,1/2/2026 09:52:54:307,1220627226LEG1      
-11896756,Margin,T,Sell,100,="SPY260102C683202601",,SPY260102C683,CALL,SPY   ,1/2/2026,683.0000,1/2/2026,1/5/2026,1/2/2026,1.24,123.98,USD,0.02,CALL SPY 683.0000 20260102,1/2/2026 10:33:03:050,1220723423LEG1      
-11896756,Margin,T,Buy,100,="SPY260102C683202601",,SPY260102C683,CALL,SPY   ,1/2/2026,683.0000,1/2/2026,1/5/2026,1/2/2026,0.95,95.02,USD,0.02,CALL SPY 683.0000 20260102,1/2/2026 10:29:17:567,1220711856LEG1`;
 
         let trades = [];
         let dailyPL = {};
