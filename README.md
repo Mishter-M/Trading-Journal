@@ -1,56 +1,106 @@
 # Trading Journal 📊
 
-A modern, browser-based trading journal dashboard for tracking and analyzing your options trading performance. Built with vanilla JavaScript, HTML5, and Chart.js - **no server required!**
+A modern trading journal web app for tracking and analyzing your options trading performance. Built with **Next.js 15**, **TypeScript**, **Tailwind CSS**, **Supabase Auth**, and **Chart.js** — deployed on **Vercel**.
+
+## Architecture
+
+```
+Trading-Journal/
+├── app/                    # Next.js application
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx           # Public landing page
+│   │   │   ├── login/             # Auth pages (signup/login)
+│   │   │   ├── dashboard/         # Protected trading dashboard
+│   │   │   └── auth/callback/     # OAuth callback handler
+│   │   ├── components/
+│   │   │   ├── dashboard/         # Dashboard components
+│   │   │   │   ├── TradingDashboard.tsx
+│   │   │   │   ├── CSVUpload.tsx
+│   │   │   │   ├── StatsCards.tsx
+│   │   │   │   ├── PLChart.tsx
+│   │   │   │   ├── TradingCalendar.tsx
+│   │   │   │   ├── TradeModal.tsx
+│   │   │   │   └── InfoModal.tsx
+│   │   │   └── ui/               # shadcn/ui components
+│   │   ├── lib/
+│   │   │   ├── supabase/         # Supabase client/server/middleware
+│   │   │   ├── trading.ts        # CSV parsing & P/L calculations
+│   │   │   └── types.ts          # TypeScript types
+│   │   └── middleware.ts         # Route protection
+│   └── .env.local               # Supabase credentials (not committed)
+├── index.html                    # Original standalone dashboard (legacy)
+└── Orders_Data/                  # Sample CSV data
+```
 
 ## Features
 
-### 📈 Performance Analytics
-- **Cumulative P/L Chart**: Interactive line chart showing your trading performance over time
+### � Authentication
+- Email/password signup & login via Supabase Auth
+- Protected dashboard route with middleware
+- Session management with cookie-based auth
+
+### �📈 Performance Analytics
+- **Cumulative P/L Chart**: Interactive chart with time range filters (1W, 1M, 3M, 6M, 1Y, 3Y, YTD)
 - **Key Statistics**: Total P/L, total trades, win rate, and average daily P/L
 - **Visual Trends**: Identify winning and losing streaks at a glance
 
 ### 📅 Monthly Trading Calendar
 - **Interactive Calendar View**: See daily P/L for each trading day
 - **Color-Coded Days**: Green for profitable days, red for losses
-- **Trade Count**: Quick view of number of trades per day
 - **Click for Details**: Tap any day to see complete trade breakdown
 
 ### 💼 Trade Details Modal
 - **Daily Summary**: Buy total, sell total, and commission breakdown
 - **Individual Trades**: Complete list of all trades with timestamps
-- **Transaction Details**: Price, quantity, amount, and commission for each trade
 
 ### 🎨 Modern Design
-- Dark theme with glass-morphism effects
-- Smooth animations and transitions
-- Responsive layout (works on desktop, tablet, mobile)
-- Professional blue/purple color scheme
+- Pure black theme (#000000) with subtle borders
+- Responsive layout (desktop, tablet, mobile)
+- shadcn/ui component library
 
 ## Quick Start
 
-### 1. Open the Dashboard
+### Prerequisites
+- Node.js 18+
+- A Supabase project ([supabase.com](https://supabase.com))
 
-Simply open `trading_dashboard.html` in your web browser - **no server setup required!**
+### 1. Install Dependencies
 
 ```bash
-# Option 1: Double-click the file
-# Option 2: Right-click → Open With → Your preferred browser
-# Option 3: Drag and drop into browser window
+cd app
+npm install
 ```
 
-### 2. Upload Your CSV File
+### 2. Configure Environment
 
-1. Click the **"📁 Upload CSV File"** button in the header
-2. Select your trading data CSV file from your computer
-3. The dashboard will automatically parse and display your data
+Create `app/.env.local`:
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-**Tip:** Click the **ℹ️ icon** next to the upload button to see CSV format requirements.
+### 3. Run Development Server
+
+```bash
+cd app
+npm run dev
+```
+
+### 4. Upload Your CSV File
+
+1. Sign up or log in
+2. Click **"📁 Upload CSV File"** in the dashboard
+3. Select your trading data CSV file
+4. Dashboard displays stats, chart, and calendar instantly
 
 ## CSV File Format
 
 ### Required Columns
 
-Your CSV file **must** include these columns:
+## CSV File Format
+
+### Required Columns
 
 | Column Name | Description | Example |
 |-------------|-------------|---------|
@@ -61,17 +111,12 @@ Your CSV file **must** include these columns:
 
 ### Optional Columns
 
-These columns enhance your trade details view but are not required:
-
 | Column Name | Description | Example |
 |-------------|-------------|---------|
 | Quantity | Number of contracts | `200` |
 | Description | Trade description | `PUT SPY 693.0000 20260116` |
 | Activity Time | Timestamp of trade | `1/16/2026 09:46:19:593` |
 | Price | Price per contract | `0.84` |
-| Symbol | Option symbol | `SPY260116P693` |
-| CallPut | CALL or PUT | `PUT` |
-| StrikePrice | Strike price | `693.0000` |
 
 ### Example CSV
 
@@ -79,131 +124,32 @@ These columns enhance your trade details view but are not required:
 Activity Date,Transaction,Quantity,Amount,Commission,Description,Activity Time,Price
 1/16/2026,Sell,200,167.97,0.03,PUT SPY 693.0000,1/16/2026 09:46:19,0.84
 1/16/2026,Buy,200,160.02,0.02,PUT SPY 693.0000,1/16/2026 09:45:48,0.80
-1/15/2026,Sell,400,87.94,0.06,CALL SPY 696.0000,1/15/2026 11:35:04,0.22
-1/15/2026,Buy,500,145.06,0.06,CALL SPY 696.0000,1/15/2026 11:45:47,0.29
 ```
 
 **Note**: Most broker exports (TD Ameritrade, E-Trade, etc.) will include all necessary columns automatically.
 
-## How to Use
+## Deployment
 
-### Step 1: Export Your Trading Data
+Hosted on **Vercel** with automatic deployments from GitHub.
 
-Export your trades from your broker in CSV format. Most brokers provide this feature:
-- **TD Ameritrade**: My Account → History & Statements → Transaction History
-- **E-Trade**: Accounts → Transactions → Download
-- **Interactive Brokers**: Account Management → Reports → Flex Queries
-- **Robinhood**: Account → Menu → History → Export
+- **Production**: Deploys from `main` branch
+- **Preview**: Deploys from feature branches
 
-### Step 2: Upload to Dashboard
+### Environment Variables (Vercel)
 
-1. Open `trading_dashboard.html` in your browser
-2. Click the **"📁 Upload CSV File"** button
-3. Select your exported CSV file
-4. Your data will load automatically
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
 
-### Step 3: Explore Your Performance
+## Tech Stack
 
-**View Statistics**
-- Check your Total P/L, Win Rate, and Average Daily P/L in the stat cards
-
-**Analyze Trends**
-- Review the cumulative P/L chart to see your performance trajectory
-- Hover over points for detailed values
-
-**Review Trading Days**
-- Navigate through months using ◀ ▶ buttons
-- Click any day with trades to see detailed breakdown
-- Green days = profitable, Red days = losses
-
-### Updating Your Data
-
-Simply upload a new CSV file whenever you want to update your data. The dashboard will:
-- Clear previous data
-- Parse the new file
-- Refresh all statistics and charts automatically
-
-## Dashboard Navigation
-
-**Statistics Cards**
-- View overall trading performance metrics at the top
-- Colors indicate positive (green) or negative (red) performance
-
-**P/L Chart**
-- Shows cumulative profit/loss over time
-- Hover over points to see exact values
-- Smooth line indicates trend direction
-
-**Calendar**
-- Navigate months using arrow buttons ◀ ▶
-- Click any colored day to view detailed trades
-- Empty days indicate no trading activity
-
-**Trade Details**
-- Click any calendar day with trades
-- View complete breakdown of all transactions
-- See buy/sell totals and commission costs
-- Close modal by clicking the × or clicking outside
-
-## Project Structure
-
-```
-Trading-Journal/
-├── trading_dashboard.html    # Main dashboard application
-├── Orders_Data/
-│   └── Orders_data.csv       # Your trading data
-└── README.md                 # This file
-```
-
-## Technical Details
-
-### Technologies Used
-- **HTML5/CSS3**: Modern, responsive design
-- **JavaScript**: Dynamic data processing and interactivity
-- **Chart.js**: Beautiful, interactive charts
-- **No dependencies**: All libraries loaded from CDN
-
-### Browser Compatibility
-- ✅ Chrome (recommended)
-- ✅ Firefox
-- ✅ Safari
-- ✅ Edge
-- ✅ Any modern browser with JavaScript enabled
-
-### Data Privacy
-- **100% Local**: All data processing happens in your browser
-- **No Server Required**: Works completely offline (after initial load)
-- **No Data Upload**: Your trading data never leaves your computer
-
-## Calculations
-
-### Daily P/L
-```
-Daily P/L = (Sell Total - Sell Commissions) - (Buy Total + Buy Commissions)
-```
-
-### Win Rate
-```
-Win Rate = (Number of Profitable Days / Total Trading Days) × 100
-```
-
-### Average P/L
-```
-Average P/L = Total P/L / Number of Trading Days
-```
-
-## Customization
-
-### Changing Colors
-Edit the CSS in `trading_dashboard.html`:
-- Line ~12: Background gradient
-- Line ~115: Positive color (default: green)
-- Line ~119: Negative color (default: red)
-
-### Modifying Chart Style
-Edit Chart.js configuration around line ~580:
-- Change `borderColor` for line color
-- Adjust `tension` for curve smoothness
+- **Framework**: Next.js 15 (App Router, TypeScript)
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Auth**: Supabase Auth (email/password)
+- **Charts**: Chart.js + react-chartjs-2
+- **Hosting**: Vercel
+- **Database**: Supabase (PostgreSQL)
 - Modify `pointRadius` for point size
 
 ## Troubleshooting
